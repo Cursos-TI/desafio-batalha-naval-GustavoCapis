@@ -1,40 +1,73 @@
 #include <stdio.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+#define LINHAS 10
+#define COLUNAS 10
 
-int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
+int main()
+{
+    // Tabuleiro 10x10 inicializado com zeros (0 = água, 3 = navio)
+    int tabuleiro[LINHAS][COLUNAS] = {0}; // Cria uma matriz 10x10 com todos os elementos zerados
 
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
+    // Navios: arrays que representam partes de navios (cada 3 é uma parte do navio)
+    int navioVertical[3] = {3, 3, 3};   // Navio vertical de 3 partes
+    int navioHorizontal[3] = {3, 3, 3}; // Navio horizontal de 3 partes
+    int navioDiagonal1[3] = {3, 3, 3};  // Navio diagonal de 3 partes
+    int navioDiagonal2[3] = {3, 3, 3};
 
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+    // Imprime o cabeçalho das colunas (A até J)
+    printf("   ");                                // Espaçamento para alinhar com os números das linhas
+    for (char letra = 'A'; letra <= 'J'; letra++) // Loop de 'A' a 'J' (10 colunas)
+    {
+        printf(" %c", letra); // Imprime cada letra do cabeçalho
+    }
+    printf("\n"); // Quebra de linha após o cabeçalho
 
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
-    
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
+    // Posiciona o navio HORIZONTAL no tabuleiro (linha 2, colunas 6-8)
+    for (int h = 0; h < 3; h++) // Loop para as 3 partes do navio horizontal
+    {
+        tabuleiro[2][6 + h] = navioHorizontal[h]; // Coloca cada parte do navio (valor 3)
+    }
 
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
+    // Posiciona o navio VERTICAL no tabuleiro (coluna 4, linhas 4-6)
+    for (int v = 0; v < 3; v++) // Loop para as 3 partes do navio vertical
+    {
+        tabuleiro[4 + v][4] = navioVertical[v]; // Coloca cada parte do navio (valor 3)
+    }
 
-    return 0;
+// Posiciona o navio DIAGONAL 1 no tabuleiro
+for (int i = 0; i < LINHAS; i++) // Loop que itera sobre cada linha do tabuleiro
+{
+    for (int j = 0; j < COLUNAS; j++) // Loop que itera sobre cada coluna do tabuleiro
+    {
+        // Verifica se estamos na diagonal principal (i == j) e se o índice da linha (i) está entre 0 e 2
+        if (i == j && i >= 0 && i < 3) 
+        {
+            tabuleiro[i][j] = 3; // Se a condição for verdadeira, coloca o valor 3 na posição (i, j) do tabuleiro
+        }
+    }
+}
+
+// Posiciona o navio DIAGONAL 2 no tabuleiro
+for (int i = 0; i < LINHAS; i++) // Loop que itera sobre cada linha do tabuleiro
+{
+    for (int j = 0; j < COLUNAS; j++) // Loop que itera sobre cada coluna do tabuleiro
+        // Verifica se a soma dos índices (i + j) é igual a 9 e se o índice da linha (i) está entre 7 e 9
+        if (i + j == 9 && i >= 7 && i <= 9) 
+        {
+            tabuleiro[i][j] = 3; // Se a condição for verdadeira, coloca o valor 3 na posição (i, j) do tabuleiro
+        }
+}    
+
+    // Imprime o tabuleiro completo com numeração das linhas
+    for (int i = 0; i < LINHAS; i++) // Loop pelas linhas (0 a 9)
+    {
+        printf("%d  ", i);                // Imprime o número da linha com alinhamento
+        for (int j = 0; j < COLUNAS; j++) // Loop pelas colunas (0 a 9)
+        {
+            printf(" %d", tabuleiro[i][j]); // Imprime cada célula do tabuleiro
+        }
+        printf("\n"); // Quebra de linha após cada linha do tabuleiro
+    }
+
+    return 0; // Retorna 0 indicando execução bem-sucedida
 }
